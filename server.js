@@ -43,12 +43,22 @@ function viewEmployees() {
 }
 
 function addDepartment(departmentName) {
-    db.query(`INSERT INTO departments (name) VALUES ("${departmentName}");`, (err, result) => {
-        if (err) {
-            console.error(err);
-            return;
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'departmentName',
+            message: 'What is the name of the new department?'
         }
-        console.log(`${departmentName} successfully added!`);
+    ]).then((data) => {
+        const { departmentName } = data;
+        db.query(`INSERT INTO departments (name) VALUES ("${departmentName}");`, (err, result) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            console.log(`${departmentName} successfully added!`);
+            init();
+        });
     });
 }
 
@@ -78,7 +88,7 @@ function addRole() {
             }
             console.log(`${title} successfully added!`);
             init();
-        })
+        });
     });
 }
 

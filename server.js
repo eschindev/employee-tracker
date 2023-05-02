@@ -52,13 +52,33 @@ function addDepartment(departmentName) {
     });
 }
 
-function addRole(title, salary, departmentId) {
-    db.query(`INSERT INTO roles (title, salary, department_id) VALUES ("${title}", ${salary}, ${departmentId});`, (err, result) => {
-        if (err) {
-            console.error(err);
-            return;
+function addRole() {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'title',
+            message: 'What is the new role\'s title?'
+        },
+        {
+            type: 'input',
+            name: 'salary',
+            message: 'What is the new role\'s salary?'
+        },
+        {
+            type: 'input',
+            name: 'departmentId',
+            message: 'What is the ID of the new role\'s department?'
         }
-        console.log(`${title} successfully added!`);
+    ]).then((data) => {
+        const { title, salary, departmentId } = data;
+        db.query(`INSERT INTO roles (title, salary, department_id) VALUES ("${title}", ${salary}, ${departmentId});`, (err, result) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            console.log(`${title} successfully added!`);
+            init();
+        })
     });
 }
 

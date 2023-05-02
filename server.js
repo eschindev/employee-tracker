@@ -20,6 +20,7 @@ function viewDepartments() {
             return 'error: failed to retrieve department list.';
         }
         console.table(result);
+        init();
     });
 }
 
@@ -30,6 +31,7 @@ function viewRoles() {
             return 'error: failed to retrieve department list.';
         }
         console.table(result);
+        init();
     }); 
 }
 
@@ -39,6 +41,7 @@ function viewEmployees() {
             console.error(err);
         }
         console.table(result);
+        init();
     });
 }
 
